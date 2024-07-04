@@ -16,9 +16,13 @@
             color: white;
             padding: 10px 0;
             text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1;
         }
         .content {
-            margin: 20px;
+            margin: 70px 20px 20px 250px;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
@@ -59,10 +63,48 @@
         .link img {
             margin-right: 5px;
         }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding-top: 60px;
+            transition: 0.3s;
+            overflow-x: hidden;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        .open-btn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 36px;
+            margin-left: 50px;
+        }
     </style>
 </head>
 <body>
     <div class="header">
+        <span class="open-btn" onclick="openSidebar()">&#9776; Menu</span>
         <h1>Artem Frenk</h1>
         <p>Data Scientist | Machine Learning Engineer First, AI Engineer Second</p>
         <a href="https://github.com/afrenkai" class="link">
@@ -74,16 +116,23 @@
             My LinkedIn
         </a>
         <a href="mailto:afrenk.biz@gmail.com" class="link">
-            <img src = "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt = "gmail" class="icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="gmail" class="icon">
             Email Me
         </a>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
+        <a href="#about-me">About Me</a>
+        <a href="#experience">Experience</a>
+        <a href="#classes-taken">Classes Taken</a>
+        <a href="#tech-stack">Tech Stack</a>
+        <a href="#skills-word-cloud">Skills Word Cloud</a>
     </div>
     <div class="content">
         <div class="section" id="about-me">
             <h2>About Me</h2>
-            <p>A brief introduction</p>
-            <P>Hi, my name is Artem Frenk. I am a Rising Junior at Worcester Polytechnic Institute in Worcester, MA. I major in Data Science, with a focus in Machine Learning and NLP. Below, you can find
-                some projects I have done, technologies (packages, frameworks, languages, etc.) that I am proficient in, and some of my experience. 
+            <p>Hello, my name is Artem Frenk. I am a Rising Junior at Worcester Polytechnic Institute in Worcester, MA. I major in Data Science, with a focus in Machine Learning and NLP. Below, you can find
+                some projects I have done, technologies (packages, frameworks, languages, etc.) that I am proficient in, and some of my experience.
             </p>
         </div>
         <div class="section" id="experience">
@@ -111,5 +160,15 @@
     <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.5/build/d3.layout.cloud.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
+    <script>
+        function openSidebar() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.querySelector(".content").style.marginLeft = "250px";
+        }
+        function closeSidebar() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".content").style.marginLeft = "0";
+        }
+    </script>
 </body>
 </html>
