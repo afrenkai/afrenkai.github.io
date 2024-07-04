@@ -22,10 +22,11 @@
             z-index: 1;
         }
         .content {
-            margin: 70px 20px 20px 250px;
+            margin: 70px 20px 20px 270px;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
+            transition: margin-left 0.3s;
         }
         .section {
             margin-bottom: 40px;
@@ -71,8 +72,9 @@
             left: 0;
             background-color: #333;
             padding-top: 60px;
-            transition: 0.3s;
+            transition: width 0.3s;
             overflow-x: hidden;
+            z-index: 2;
         }
         .sidebar a {
             padding: 10px 15px;
@@ -92,6 +94,10 @@
             color: white;
             padding: 10px 15px;
             border: none;
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            z-index: 3;
         }
         .close-btn {
             position: absolute;
@@ -107,16 +113,16 @@
         <span class="open-btn" onclick="openSidebar()">&#9776; Menu</span>
         <h1>Artem Frenk</h1>
         <p>Data Scientist | Machine Learning Engineer First, AI Engineer Second</p>
-        <a href="https://github.com/afrenkai" class="link">
+        <a href="https://github.com/afrenkai" class="link" target="_blank">
             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" class="icon">
             My GitHub
         </a>
-        <a href="https://www.linkedin.com/in/artem-frenk-281726236/" class="link">
+        <a href="https://www.linkedin.com/in/artem-frenk-281726236/" class="link" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" class="icon">
             My LinkedIn
         </a>
-        <a href="mailto:afrenk.biz@gmail.com" class="link">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="gmail" class="icon">
+        <a href="mailto:afrenk.biz@gmail.com" class="link" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail" class="icon">
             Email Me
         </a>
     </div>
@@ -163,11 +169,11 @@
     <script>
         function openSidebar() {
             document.getElementById("sidebar").style.width = "250px";
-            document.querySelector(".content").style.marginLeft = "250px";
+            document.querySelector(".content").style.marginLeft = "270px";
         }
         function closeSidebar() {
             document.getElementById("sidebar").style.width = "0";
-            document.querySelector(".content").style.marginLeft = "0";
+            document.querySelector(".content").style.marginLeft = "20px";
         }
     </script>
 </body>
