@@ -12,17 +12,27 @@
             background-color: #f4f4f4;
         }
         .header {
-            background-color: #333;
-            color: white;
+            background-color: #87CEFA; /* Light blue background color */
+            color: black;
             padding: 10px 0;
             text-align: center;
+            transition: padding 0.3s, background-color 0.3s;
             position: fixed;
             width: 100%;
-            top: 0;
             z-index: 1;
+            top: 0; /* Ensure it's always at the top */
+        }
+        .header.shrink {
+            padding: 5px 0;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header p {
+            margin: 5px 0 10px;
         }
         .content {
-            margin: 70px 20px 20px 270px;
+            margin-top: 100px; /* Adjusted for the height of the header */
             padding: 20px;
             background-color: white;
             border-radius: 8px;
@@ -30,10 +40,13 @@
         }
         .section {
             margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f0f0f0; /* Light gray background color */
+            border-radius: 8px;
         }
         .footer {
-            background-color: #333;
-            color: white;
+            background-color: #87CEFA; /* Light blue background color */
+            color: black;
             text-align: center;
             padding: 10px 0;
             position: fixed;
@@ -45,10 +58,6 @@
             height: 300px;
             margin-bottom: 20px;
         }
-        #bar-chart {
-            width: 100%;
-            height: 300px;
-        }
         .icon {
             width: auto;
             height: 1em;
@@ -58,7 +67,7 @@
             display: inline-flex;
             align-items: center;
             margin-left: 10px;
-            color: white;
+            color: black;
             text-decoration: none;
         }
         .link img {
@@ -69,18 +78,21 @@
             width: 250px;
             position: fixed;
             top: 0;
-            left: 0;
-            background-color: #333;
+            left: -250px; /* Sidebar closed position */
+            background-color: #87CEFA; /* Light blue background color */
             padding-top: 60px;
-            transition: width 0.3s;
+            transition: left 0.3s; /* Use left property for sidebar animation */
             overflow-x: hidden;
             z-index: 2;
+        }
+        .sidebar.open {
+            left: 0; /* Sidebar open position */
         }
         .sidebar a {
             padding: 10px 15px;
             text-decoration: none;
             font-size: 20px;
-            color: white;
+            color: black;
             display: block;
             transition: 0.3s;
         }
@@ -105,11 +117,12 @@
             right: 0;
             font-size: 36px;
             margin-left: 50px;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div class="header">
+    <div class="header" id="header">
         <span class="open-btn" onclick="openSidebar()">&#9776; Menu</span>
         <h1>Artem Frenk</h1>
         <p>Data Scientist | Machine Learning Engineer First, AI Engineer Second</p>
@@ -128,30 +141,33 @@
     </div>
     <div class="sidebar" id="sidebar">
         <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
-        <a href="#about-me">About Me</a>
-        <a href="#experience">Experience</a>
-        <a href="#classes-taken">Classes Taken</a>
-        <a href="#tech-stack">Tech Stack</a>
-        <a href="#skills-word-cloud">Skills Word Cloud</a>
+        <a href="#about-me" onclick="navigateToSection('#about-me')">About Me</a>
+        <a href="#experience" onclick="navigateToSection('#experience')">Experience</a>
+        <a href="#classes-taken" onclick="navigateToSection('#classes-taken')">Classes Taken</a>
+        <a href="#skills-word-cloud" onclick="navigateToSection('#skills-word-cloud')">Skills Word Cloud</a>
     </div>
     <div class="content">
         <div class="section" id="about-me">
             <h2>About Me</h2>
-            <p>Hello, my name is Artem Frenk. I am a Rising Junior at Worcester Polytechnic Institute in Worcester, MA. I major in Data Science, with a focus in Machine Learning and NLP. Below, you can find
-                some projects I have done, technologies (packages, frameworks, languages, etc.) that I am proficient in, and some of my experience.
-            </p>
+            <p>Hello, my name is Artem Frenk. I am a Rising Junior at Worcester Polytechnic Institute in Worcester, MA. I major in Data Science, with a focus in Machine Learning and NLP. Below, you can find some projects I have done, technologies (packages, frameworks, languages, etc.) that I am proficient in, and some of my experience.</p>
         </div>
         <div class="section" id="experience">
             <h2>Experience</h2>
-            <p>Details about my work experience.</p>
+            <p>ILorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida in fermentum et sollicitudin. Dolor morbi non arcu risus quis varius. Praesent semper feugiat nibh sed pulvinar. Et malesuada fames ac turpis. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Cras semper auctor neque vitae tempus quam pellentesque nec. Integer vitae justo eget magna. Faucibus et molestie ac feugiat sed lectus vestibulum. Et sollicitudin ac orci phasellus egestas tellus. In iaculis nunc sed augue lacus.
+
+                Interdum velit laoreet id donec ultrices tincidunt arcu non. Et netus et malesuada fames ac. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus sed. Scelerisque purus semper eget duis at tellus at urna. Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in. Fames ac turpis egestas maecenas pharetra convallis posuere morbi. Molestie a iaculis at erat pellentesque. Faucibus nisl tincidunt eget nullam non nisi est. Viverra tellus in hac habitasse platea. Vel pharetra vel turpis nunc eget lorem dolor sed viverra. Ullamcorper sit amet risus nullam eget felis.
+                
+                Diam quis enim lobortis scelerisque fermentum dui faucibus. Lectus urna duis convallis convallis tellus. Malesuada pellentesque elit eget gravida cum sociis. Cursus risus at ultrices mi tempus imperdiet nulla malesuada. Vel facilisis volutpat est velit egestas dui. Tincidunt vitae semper quis lectus nulla at volutpat. Et ultrices neque ornare aenean. Nunc non blandit massa enim nec. Pulvinar sapien et ligula ullamcorper malesuada proin libero. Iaculis urna id volutpat lacus laoreet. Aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis. Lectus arcu bibendum at varius vel pharetra. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat.
+                
+                Eros in cursus turpis massa tincidunt dui ut ornare. Vulputate mi sit amet mauris commodo. Tortor posuere ac ut consequat semper viverra. Fames ac turpis egestas integer. Consequat id porta nibh venenatis cras sed felis. Tempus egestas sed sed risus pretium quam vulputate. Accumsan in nisl nisi scelerisque eu ultrices. Nibh tortor id aliquet lectus proin nibh nisl. Purus semper eget duis at tellus at urna condimentum mattis. Tristique nulla aliquet enim tortor at auctor. Praesent tristique magna sit amet purus gravida quis blandit. Netus et malesuada fames ac turpis egestas. Aliquet nec ullamcorper sit amet risus. Eu volutpat odio facilisis mauris. Libero justo laoreet sit amet cursus sit amet dictum sit. In egestas erat imperdiet sed euismod nisi porta. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Et pharetra pharetra massa massa ultricies mi quis hendrerit dolor. Fusce id velit ut tortor pretium. Lectus mauris ultrices eros in cursus turpis massa.
+                
+                Sed turpis tincidunt id aliquet risus feugiat in. Malesuada fames ac turpis egestas sed tempus urna et. Sit amet cursus sit amet dictum sit amet. Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet. Sapien pellentesque habitant morbi tristique senectus et netus. Gravida neque convallis a cras semper. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Metus vulputate eu scelerisque felis. Odio euismod lacinia at quis risus sed. A iaculis at erat pellentesque adipiscing commodo elit. Imperdiet dui accumsan sit amet nulla facilisi morbi tempus iaculis. Arcu cursus vitae congue mauris rhoncus aenean.
+                
+                </p>
         </div>
         <div class="section" id="classes-taken">
             <h2>Classes Taken</h2>
-            <p>A list of relevant classes and courses completed by me.</p>
-        </div>
-        <div class="section" id="tech-stack">
-            <h2>Tech Stack</h2>
-            <canvas id="bar-chart"></canvas>
+            <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
         </div>
         <div class="section" id="skills-word-cloud">
             <h2>Skills Word Cloud</h2>
@@ -164,16 +180,36 @@
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.5/build/d3.layout.cloud.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <script src = "script.js"></script>
+    <script src = "wordcloud.js"></script>
     <script>
         function openSidebar() {
-            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("sidebar").classList.add("open");
             document.querySelector(".content").style.marginLeft = "270px";
         }
         function closeSidebar() {
-            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("sidebar").classList.remove("open");
             document.querySelector(".content").style.marginLeft = "20px";
+        }
+        function navigateToSection(sectionId) {
+            closeSidebar(); // Close sidebar when navigating on mobile
+            const headerHeight = document.getElementById("header").offsetHeight;
+            const sectionTop = document.querySelector(sectionId).offsetTop - headerHeight;
+            window.scrollTo({
+                top: sectionTop,
+                behavior: 'smooth'
+            });
+    }
+
+
+        // Adjust header size on scroll
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                document.getElementById("header").classList.add("shrink");
+            } else {
+                document.getElementById("header").classList.remove("shrink");
+            }
         }
     </script>
 </body>
