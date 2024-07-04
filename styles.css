@@ -44,6 +44,18 @@ body {
     border-radius: 8px;
 }
 
+.section h2 {
+    text-align: center;
+    margin-bottom: 30px; /* Adjust margin as needed */
+}
+
+.section h3 {
+    text-align: center;
+    margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+
+
 .footer {
     background-color: white; /* Light blue background color */
     color: black;
@@ -123,3 +135,10 @@ body {
     margin-left: 50px;
     color: white;
 }
+ul {
+    list-style-type: none;
+}
+
+/* #word-cloud {
+    text-align: center;
+    margin-top: 20px; } */
