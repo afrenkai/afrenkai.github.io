@@ -1,0 +1,16 @@
+/* src/components/Header.css */
+.header {
+    background-color: #87CEFA;
+    color: black;
+    padding: 10px 0;
+    text-align: center;
+    transition: padding 0.3s, background-color 0.3s;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+}
+
+.header.shrink {
+    padding: 5px 0;
+}

@@ -1,0 +1,60 @@
+/* src/App.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.content {
+  margin-top: 120px; /* Adjusted for the height of the header */
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  transition: margin-left 0.3s;
+}
+
+.section {
+  margin-bottom: 40px;
+  padding: 20px;
+  background-color: #f0f0f0; /* Light gray background color */
+  border-radius: 8px;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 30px; /* Adjust margin as needed */
+}
+
+.section h3 {
+  text-align: center;
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.footer {
+  background-color: white; /* Light blue background color */
+  color: black;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.icon {
+  width: auto;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.link img {
+  margin-right: 5px;
+}
