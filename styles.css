@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #fff0db;
 }
 
 .header {
@@ -32,7 +32,7 @@ body {
 .content {
     margin-top: 120px; /* Adjusted for the height of the header */
     padding: 20px;
-    background-color: white;
+    background-color: #fff0db;
     border-radius: 8px;
     transition: margin-left 0.3s;
 }
