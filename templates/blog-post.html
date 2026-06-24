@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Artem Frenk">
+    <meta name="description" content="$if(description)$$description$$else$Blog post by Artem Frenk$endif$">
+    <title>$pagetitle$ | Artem Frenk</title>
+    <link rel="stylesheet" href="../../assets/site.css">
+    $for(header-includes)$
+    $header-includes$
+    $endfor$
+    <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            argmin: '\\operatorname*{arg\\,min}',
+            argmax: '\\operatorname*{arg\\,max}',
+            E: '\\mathbb{E}',
+            Var: '\\operatorname{Var}',
+            Cov: '\\operatorname{Cov}'
+          }
+        }
+      };
+    </script>
+    $if(math)$
+    $math$
+    $endif$
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="masthead">
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/papers/">Papers</a>
+          <a href="/blogs/" aria-current="page">Blogs</a>
+        </nav>
+      </header>
+
+      <main id="content" class="page-grid page-grid-single post-layout">
+        <article class="post">
+	<p class="kicker"><a href="/blogs/">Blogs</a></p>
+          <h1 class="page-title">$title$</h1>
+          $if(date)$<p class="meta">$date$</p>$endif$
+          <div class="post-body">
+$body$
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

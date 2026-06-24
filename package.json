@@ -1,0 +1,13 @@
+{
+  "name": "personal-site-real",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build_blogs.mjs",
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,263 @@
+:root {
+  color-scheme: light;
+  --paper: #f3f7f9;
+  --nav: #e4edf3;
+  --ink: #1e2933;
+  --muted: #64717c;
+  --line: #d2dde5;
+  --accent: #2f5f8a;
+  --accent-cool: #3d6f76;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--accent-cool);
+}
+
+.site-shell {
+  display: flex;
+  min-height: 100svh;
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  padding: 14px 0 12px;
+  background: var(--nav);
+  box-shadow: 0 0 0 100vmax var(--nav);
+  clip-path: inset(0 -100vmax);
+}
+
+
+
+.page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: clamp(28px, 6vw, 64px);
+  flex: 1;
+  padding: 46px 0 58px;
+}
+
+.page-grid-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.home-stack {
+  max-width: 700px;
+}
+
+.home-stack .side-note {
+  width: 100%;
+  max-width: 42rem;
+}
+
+.lede h1,
+.page-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  line-height: 1.15;
+}
+
+.lede p,
+.content-section p {
+  max-width: 42rem;
+}
+
+.kicker {
+  margin: 0 0 0.75rem;
+  color: var(--accent-cool);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.link-row,
+.item-list {
+  padding: 0;
+  margin: 2rem 0 0;
+  list-style: none;
+}
+
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.8rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+}
+
+.link-row li:not(:last-child)::after {
+  margin-left: 0.8rem;
+  color: var(--line);
+  content: "/";
+}
+
+.side-note {
+  align-self: start;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.news-panel {
+  margin-top: 0.75rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 5rem;
+}
+
+.content-section + .content-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+}
+
+.content-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+}
+
+.item-list {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.item-list li {
+  padding-bottom: 1.4rem;
+}
+
+.item-list h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.meta {
+  margin: 0 0 0.35rem;
+  color: var(--muted);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.15rem;
+  margin-bottom: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.84rem;
+}
+
+.site-nav a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible,
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+.post-layout {
+  max-width: 760px;
+}
+
+.post-body {
+  max-width: 46rem;
+}
+
+.post-body p,
+.post-body li {
+  line-height: 1.7;
+}
+
+.post-body ul,
+.post-body ol {
+  padding-left: 1.25rem;
+}
+
+.post-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.92em;
+}
+
+.post-body .math.display {
+  overflow-x: auto;
+  padding: 0.4rem 0;
+}
+
+.compact-list {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.compact-list .meta {
+  display: block;
+  margin-bottom: 0.08rem;
+}
+
+@media (max-width: 760px) {
+  body {
+    font-size: 16px;
+  }
+
+  .site-shell {
+    width: min(100% - 24px, 920px);
+  }
+
+  .masthead {
+    padding-top: 12px;
+  }
+
+  .page-grid {
+    grid-template-columns: 1fr;
+    padding: 34px 0 46px;
+  }
+
+  .side-note {
+    max-width: 100%;
+  }
+
+  .site-nav {
+    gap: 0.5rem 0.8rem;
+  }
+}
