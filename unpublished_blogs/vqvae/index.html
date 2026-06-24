@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Artem Frenk">
+    <meta name="description" content="Blog post by Artem Frenk">
+    <title>VQVAE | Artem Frenk</title>
+    <link rel="stylesheet" href="../../assets/site.css">
+        <script>
+      window.MathJax = {
+        tex: {
+          macros: {
+            argmin: '\\operatorname*{arg\\,min}',
+            argmax: '\\operatorname*{arg\\,max}',
+            E: '\\mathbb{E}',
+            Var: '\\operatorname{Var}',
+            Cov: '\\operatorname{Cov}'
+          }
+        }
+      };
+    </script>
+        <script
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+        type="text/javascript"></script>
+      </head>
+  <body>
+    <div class="site-shell">
+      <header class="masthead">
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/papers/">Papers</a>
+          <a href="/blogs/" aria-current="page">Blogs</a>
+        </nav>
+      </header>
+
+      <main id="content" class="page-grid page-grid-single post-layout">
+        <article class="post">
+	<p class="kicker"><a href="/blogs/">Blogs</a></p>
+          <h1 class="page-title">VQVAE</h1>
+          
+          <div class="post-body">
+<ul>
+<li>Vector Quantization: Map from <span
+class="math inline">\(\mathbb{R}^m\)</span> to <span
+class="math inline">\(\mathcal{S} \in \mathbb{R}\)</span> where <span
+class="math inline">\(| \mathcal{S} | = K\)</span> (assuming you want
+some <span class="math inline">\(K\)</span> classes) for vector
+output</li>
+<li>Alternatively, a map from <span
+class="math inline">\(\mathbb{R}^m\)</span> to <span
+class="math inline">\(\left \{ 1 , \dots , K \right \}\)</span> which
+outputs an integer or index.</li>
+<li>Based on this, we can create an “autoencoder” that trains on a
+dataset <span class="math inline">\(X\)</span>
+<ul>
+<li><p><span class="math inline">\(Q\)</span> maps <span
+class="math inline">\(X\)</span> to a latent representation <span
+class="math inline">\(z\)</span> like in a regular autoencoder but <span
+class="math inline">\(z \in \left \{ 1 \dots K \right \}\)</span>
+corresponding to a centroid <span
+class="math inline">\(\mu_z\)</span>that data would belong to.</p></li>
+<li><p><span class="math inline">\(P\)</span> would map <span
+class="math inline">\(z\)</span> to some vector <span
+class="math inline">\(\mu_z\)</span> as the estimate for <span
+class="math inline">\(x\)</span></p></li>
+<li><p>You would use SSD as the recon loss metric and use K-Means to
+optimize.</p></li>
+<li><p>Can also make a discrete “VAE” where <span
+class="math inline">\(Q\)</span> maps <span
+class="math inline">\(x\)</span> deterministically to the closes
+centroid (in L2 norm)</p>
+<p><span class="math display">\[
+  Q(z | x) \begin{cases} 1 \ \text{if} \  z = \argmin_{k} ||x -
+\mu_k||^2_2
+  \\
+  0 \ \text{else}
+  \end{cases}
+  \]</span></p></li>
+<li><p>and <span class="math inline">\(P\)</span> maps <span
+class="math inline">\(z\)</span> to a gaussian centered at <span
+class="math inline">\(\mu_z\)</span>:</p>
+<p><span class="math display">\[
+  P(x|z) = \mathcal{N}(\mu_z, I)
+  \]</span></p></li>
+<li><p>It becomes trivial to train this with a Gaussian Mixture Model
+and MLE. You can enforce that <span class="math inline">\(P(z) \sim
+Unif(1 \dots K)\)</span> or each of the centroids is equally likely
+(uniformly distributed).</p></li>
+<li><p>Once it is trained, you can very easily sample</p>
+<p><span class="math display">\[
+  z \sim P(z) = Unif(1 \dots K)\\
+  \hat{x} \sim P(x | z) = \mathcal{N}(\mu_z, I)
+  \]</span></p></li>
+<li><p>This “model” is actually pretty bad. This just adds noise to
+centroids in the higher dimensional space. But this idea does extend to
+the actual VQ-VAE</p></li>
+<li><p>Given <span class="math inline">\(X \in
+\mathbb{R}^{m}\)</span>:</p>
+<ul>
+<li><p>you want to transform each little <span class="math inline">\(x
+\in X\)</span> into feature vector <span class="math inline">\(h \in
+\mathbb{R}^{l \times d}\)</span></p>
+<figure>
+<img src="VQVAE/image.png" alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure></li>
+<li><p>then quantize <span class="math inline">\(h\)</span> into <span
+class="math inline">\(h’\)</span> using the nearest centroid(s) <span
+class="math inline">\(e_z\)</span></p>
+<figure>
+<img src="VQVAE/image%201.png" alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure></li>
+<li><p>then transform <span class="math inline">\(h&#39;\)</span> into
+<span class="math inline">\(P(x | h&#39;) = P(x | z)\)</span></p></li>
+<li><p>Issue: This is basically still K-means. x is represented by 1
+point <span class="math inline">\(h&#39;\)</span> in latent space. If
+each x has just 1 point, then its recon must be the same for all other
+<span class="math inline">\(x&#39;\)</span> that map to <span
+class="math inline">\(h&#39;\)</span> (this is a map, not
+function).</p></li>
+<li><p>Solution: transform <span class="math inline">\(x\)</span> into a
+feature vector <span class="math inline">\(h \in \mathbb{R}^{l \times
+d}\)</span></p></li>
+<li><p>split <span class="math inline">\(h\)</span> into <span
+class="math inline">\(l\)</span> vectors <span
+class="math inline">\(h_1, h_2, \dots h_l\)</span></p>
+<figure>
+<img src="VQVAE/image%202.png" alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure></li>
+<li><p>Use running estimates of <span class="math inline">\(K\)</span>
+cluster centroids over <span class="math inline">\(h_{ij}\)</span> and
+quantize <span class="math inline">\(h_j\)</span> into <span
+class="math inline">\(h&#39;_j\)</span> using its nearest centroid <span
+class="math inline">\(e_z\)</span></p>
+<figure>
+<img src="VQVAE/image%203.png" alt="image.png" />
+<figcaption aria-hidden="true">image.png</figcaption>
+</figure></li>
+<li><p>Then concatenate <span class="math inline">\(h_i&#39; \dots
+h_l\)</span> back into one vector <span
+class="math inline">\(h&#39;\)</span> and transform <span
+class="math inline">\(h&#39;\)</span> into <span
+class="math inline">\(P(x | h’) = P(x | z_j))\)</span>.</p></li>
+<li><p>The parameters that have to be learned are <span
+class="math inline">\(\phi, \theta, \text{and}\  E = [e_1, e_2, \dots
+e_K]\)</span> (the centroids of the clusters). It is best to start with
+an MLE approach to understand why modifications need to be
+made.</p></li>
+<li><p>Recalling the ELBO for continuous VAEs:</p>
+<p><span class="math display">\[
+  = -D_{KL}(Q_{\phi}(z | x) || P_{\theta}(z) +
+\mathbb{E}_{Q_{\phi}}[\log{P_{\theta}(x | z)}]
+  \]</span></p></li>
+<li><p>For VQVAEs, you want <span class="math inline">\(P(z) = Unif(1,
+\dots K) = \frac{1}{k} \forall z\)</span></p>
+<ul>
+<li><p>There is a deterministic encoder, i.e.</p>
+<p><span class="math display">\[
+  Q(z|x) = \begin{cases}1 \ \text{if}\  z = \argmin_{k} || x - e_k||^2\\
+  0 \ \text{else}
+  \end{cases}
+  \]</span></p></li>
+<li><p>By definition of KL Divergence,</p></li>
+</ul>
+<p><span class="math display">\[
+  D_{KL} = Q_{\phi}(z|x) || P_{\theta}(z)) =
+\sum_{i=1}^KQ(z|x)\log\frac{Q(z|x)}{P(z)} = 1 \log \frac{1}{\frac{1}{K}}
++ \sum 0 \log\frac{0}{\frac{1}{K}} = \log K \ \ \ \text{since 0 log 0 =
+0}
+  \]</span></p></li>
+<li><p>Since <span class="math inline">\(\log K\)</span> does not depend
+on a single one of the VQVAE parameters, it is exempt from the
+ELBO.</p></li>
+<li><p>Second half of the ELBO:</p>
+<ul>
+<li><p>like in a VAE, you could try sampling from <span
+class="math inline">\(Q(z|x)\)</span> and compute the log prob of the
+decoder (<span class="math inline">\(\log P(x | z)\)</span>). or <span
+class="math inline">\(-||x - \mu_x||^2\)</span>.</p></li>
+<li><p>Same issue as with there through, we don’t know <span
+class="math inline">\(P(x|z)\)</span> and can’t find it in any
+reasonable way since we don’t know <span
+class="math inline">\(P(x)\)</span>.</p></li>
+<li><p>Unlike with VAEs, there is no reparamaterization trick, since we
+aren’t trying to output a distribution but rather have a discrete
+representation.</p></li>
+<li><p>The main issue is that in backprop, the path to <span
+class="math inline">\(\phi\)</span> back is blocked due to
+non-differentiability.</p>
+<p><span class="math display">\[
+  \frac{\partial \log P(x|z)}{\partial h &#39;}\frac{\partial
+h&#39;}{\partial h}\frac{\partial h}{\partial \phi}
+  \]</span></p></li>
+<li><p>Part of <span class="math inline">\(\frac{\partial h’}{\partial
+h}\)</span> is <span class="math inline">\(E\)</span>, which is discrete
+and non differentiable.</p></li>
+<li><p>As such, a custom loss function is used to maximize <span
+class="math inline">\(E_{Q_\phi}[P(x | z)]\)</span></p></li>
+<li><p>You want each <span class="math inline">\(h&#39;\)</span> to
+output a high <span class="math inline">\(\log P(x | z)\)</span> (<span
+class="math inline">\(||x - \mu_x||^2\)</span>)</p></li>
+<li><p>You also want (<span class="math inline">\(e_i \dots
+e_K\)</span>) to be the centroids of the K clusters among the <span
+class="math inline">\(h_{ij}\)</span> latent representations (<span
+class="math inline">\(||h - e_z||^2\)</span>)</p></li>
+<li><p>And you want each <span class="math inline">\(h_i\)</span> to be
+close to its nearest centroid (minimize SSD)</p></li>
+<li><p><span class="math inline">\(\mathcal{L}(\phi, \theta, E) = ||x -
+\mu_x||^2 + ||h - e_z||^2\)</span></p></li>
+<li><p>You can express the gradient w.r.t <span
+class="math inline">\(\phi\)</span> as a product of jacobians</p></li>
+<li><p>The only issue that remains is the nondifferentiability of the
+map from <span class="math inline">\(h\)</span> to <span
+class="math inline">\(h&#39;\)</span>.</p></li>
+<li><p>The solution: <strong>Ignore it lol</strong></p></li>
+<li><p>They literally set it to <span class="math inline">\(I\)</span>
+in the paper.</p>
+<p><span class="math display">\[
+  \frac{\partial \log P(x|z)}{\partial h &#39;}I\frac{\partial
+h}{\partial \phi}
+  \]</span></p></li>
+<li><p>2nd loss term still has non-zero gradient w.r.t <span
+class="math inline">\(h\)</span> and <span
+class="math inline">\(e_z\)</span></p></li>
+<li><p>For more ease of use, the 2nd term is split into 2 with a stop
+gradient for separate calcs.</p>
+<p><span class="math display">\[
+  \mathcal{L}(\phi, \theta, E) = ||x - \mu_x||^2 + ||h - sg(e_z||^2) +
+||sg(h) - e_z||^2
+  \]</span></p></li>
+<li><p>If you sum them, you get the same expression, but separating them
+allows you to use an exponential moving average like in diffusion models
+or weight each loss term separately.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+          </div>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

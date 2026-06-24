@@ -98,12 +98,10 @@ function makeIndex(posts) {
   if (posts.length) {
     items = posts.map(function(post) {
       const meta = post.date ? "              <p class=\"meta\">" + escapeHtml(post.date) + "</p>" : "";
-      const description = post.description ? "              <p>" + escapeHtml(post.description) + "</p>" : "";
       return [
         "            <li>",
         "              <h3><a href=\"" + escapeHtml(post.slug) + "/\">" + escapeHtml(post.title) + "</a></h3>",
         meta,
-        description,
         "            </li>"
       ].filter(Boolean).join("\n");
     }).join("\n");

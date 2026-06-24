@@ -2,7 +2,6 @@
 
 Recently, there was a little bit of debate in one of my circles about using [Muon](https://kellerjordan.github.io/posts/muon/) or other second order optimizers for [LoRA](https://arxiv.org/abs/2106.09685) adapters of LMs (or other tasks). However, in my mind, I can't get past the fact that LoRAs are supposed to be translation invariant. Existing papers do not do a fair job or "apples to apples" comparisons of AdamW to Muon, where LRs are purposely nerfed and speed is tossed aside for accuracy (Riemannion)[https://arxiv.org/abs/2507.12142], or have other issues. First, it is important to build a background, as I have learned a lot while writing and researching this. 
 
-## 
 LoRA has what is called a "gauge symmetry": [sparse wikipedia article here](https://en.wikipedia.org/wiki/Gauge_symmetry_(mathematics)). For any invertible $Q \in GL(r)$: vector bundles $A, B$ and $AQ, Q^{-11}B$ produce the same weights $W=AB$. This can be interpreted as 
 A: the landscape of the loss being degenerate along the direction of the gauge
 and B: the hessian being completely singluar in the space of $A, B$ by its very construction. The effect of this symmetry is actually very interesting in itself. The map $\phi: (A, B) \rightarrow W = AB$ has a Jacobian $\mathcal{J}$
