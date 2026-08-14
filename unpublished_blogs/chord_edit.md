@@ -1,6 +1,28 @@
-# Chord Edit: Interpreting and Improving Papers
+# On Distance and Flows: Steps, Chords, and Transport
 
-Recently, 
+Recently, I have been going deeper and deeper into my niche of Generative Modeling. A not so old adage (source: Me) claims that when you start talking about Optimal Transport, it is either a sign of dementia or very deep AI psychosis. While I hope I am not (fully) demented, and I have not yet succumbed to the claude schizophrenia mind virus, there is likely some truth to the statement. To take a couple of steps back, an introduction to Optimal Transport is in order.
+
+## What is Optimal Transport
+
+Optimal Transport is, bluntly, mathematically very beautiful. In order to understand the definition, you first have to understand distance. Like my prior post, I will harken back to high school education, even though this pissed me off to no end when someone did this to me when I was in a stochastic processes class. (No, I don't get why the drift coefficient follows these rules and converges to $$\sqrt{\sigma}$$ "just like high school calculus"). I will attempt to be a little gentler. 
+
+If you recall learning the distance formula between two points, perhaps when being introduced to $$$y=mx+b$$, you recall that this is used in triangles. Keep this triangle in mind.
+
+If you stretch your memory a bit more, you can potentially recall one of your years in university, where you (potentially) took a linear algebra class, and learned that this is actually called the distance in $$L_1$$, norm or the magnitude between 2 vectors in euclidean space. That is all fine and dandy, but how does this connect to the near-incomprehensible word salad in the beginning of this article? Well, $$\textbf{distance}$$ is actually (like most things in math) ambiguously defined but the two things you definitely want, but don't always have are symmetry (i.e. no matter what order you put variables into a function, its value is the same) and the triangle inequality. 
+
+## The Triangle Inequality
+
+I promised triangles, and here it is. The triangle inequality is pretty simple. Effectively, it states that for any triangle, the sum of 2 lengths of any 2 sides (can be an isosceles, as you will see) must be greater than or equal to the length of the last side. Concretely, defining $$a, b, c$$ as side lengths, and c being the odd one out, $$c \leq a + b$$. 
+That is very nice, and I am sure there is exactly 1 person who cares. But, in euclidean geometry, this is actually a theorem about vector norms. mainly, the $$L_1$$ norm of the sum of 2 vectors is less than or equal to the sum of the magnitde of them by themselves. Being pedantic, the triangle inequality from the triangle still holds if the vectors are $$\in \mathbb{R}^1$$ and both vectors are real numbers. 
+
+## How is this remotely useful
+
+Very good question. Not immediately apparent. However, a common problem in machine learning is to figure out how "close" two different data distributions are. Or, potentially, if you want to measure probability distributions. You can't --reasonably-- take every single point in distribution 1 and take the euclidean distance to a paired point in distribution 2. There exist measures of distance between probability distributions, but they do not make mathematicians happy. You might be familiar with the Kullback-Liebler divergence, especially if you come from a reinforcement learning background. This is a $$\textbf{Divergence}$$, meaning it does not satisfy both the property of symmetry and the triangle inequality (in the case of KL, the former is unsatified). For reference, $$D_{KL}(P\|Q) = \int p(x) \log \biggl(\frac{p(x)}{q(x)}\biggr)dx
+and $$P, Q$$ are probability distributions being compared. 
+
+
+
+
 - go line by line for chord edit
 - explain the main code 
 - tldr paper

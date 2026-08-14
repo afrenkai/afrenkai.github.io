@@ -1,4 +1,4 @@
-# On Second Order Optimizers
+# On Higher Order Optimizers (HALF WRITTEN)
 
 Recently, there was a little bit of debate in one of my circles about using [Muon](https://kellerjordan.github.io/posts/muon/) or other second order optimizers for [LoRA](https://arxiv.org/abs/2106.09685) adapters of LMs (or other tasks). However, in my mind, I can't get past the fact that LoRAs are supposed to be translation invariant. Existing papers do not do a fair job or "apples to apples" comparisons of AdamW to Muon, where LRs are purposely nerfed and speed is tossed aside for accuracy (Riemannion)[https://arxiv.org/abs/2507.12142], or have other issues. First, it is important to build a background, as I have learned a lot while writing and researching this. 
 

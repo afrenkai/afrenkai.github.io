@@ -1,6 +1,6 @@
 # "4D" Attention and Masked (Diffusion) Language Models
 
-I am sure you know of attention. If not, lowkey do a little bit of reading and come back, since a lot of this hinges on prior knowledge. For this, I used the pytorch and Flash Attention Implementations as reference, as well as transformers. Mileage may vary with other frameworks. 
+I am sure you know of attention. If not, I would encourage a do a little bit of reading and come back, since a lot of this hinges on prior knowledge. For this, I used the pytorch and Flash Attention Implementations as reference, as well as transformers. Mileage may vary with other frameworks. 
 
 ## Scaled Dot-Product Attention
 

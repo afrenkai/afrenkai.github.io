@@ -131,7 +131,7 @@ function makeIndex(posts) {
     "        <nav class=\"site-nav\" aria-label=\"Primary navigation\">",
     "          <a href=\"/\">Home</a>",
     "          <a href=\"/papers/\">Papers</a>",
-    "          <a href=\"/blogs/\" aria-current=\"page\">Blogs</a>",
+    "          <a href=\"/blogs/\" aria-current=\"page\">Blogs and Notes</a>",
     "        </nav>",
     "      </header>",
     "",
