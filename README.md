@@ -21,3 +21,15 @@ By default this serves the repo at `http://127.0.0.1:8765/`. Override with `PORT
 ## Production
 
 Run `npm run build`, then serve the repository root as static files. No Python runtime is required. If your host expects a Node start command, use `npm start` and set `PORT` if required.
+
+## Todos for the future:
+
+~~Rewrite in rust~~
+
+~~Rewrite in Jai~~
+
+~~Rewrite in Go~~
+
+~~Rewrite in C++~~
+
+Rewrite in Zig
