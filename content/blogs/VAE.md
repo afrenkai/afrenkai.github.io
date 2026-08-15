@@ -17,7 +17,6 @@
         
         $$
         =  log \int_z P(x | z) P(z)dz \ \ \ \ \ \  (\text{by defn. of conditional prob.)}
-        
         $$
         
     - **NOT TRACTABLE!!!!!**
