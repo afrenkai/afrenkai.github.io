@@ -235,6 +235,20 @@ a:focus-visible {
   margin-bottom: 0.08rem;
 }
 
+@supports (animation-timeline: scroll()) {
+  .masthead {
+    animation: masthead-fade linear both;
+    animation-range: 0 140px;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes masthead-fade {
+  to {
+    opacity: 0;
+  }
+}
+
 @media (max-width: 760px) {
   body {
     font-size: 16px;
