@@ -1,4 +1,5 @@
 /blogs/
+/reading-list/
 .zig-cache/
 zig-out/
 .DS_Store

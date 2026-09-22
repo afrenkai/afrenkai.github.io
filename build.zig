@@ -33,6 +33,23 @@ pub fn build(b: *std.Build) void {
     const blog_step = b.step("blogs", "compile blogs with pandoc");
     blog_step.dependOn(&blog_run.step);
 
+    const reading_module = b.createModule(.{
+        .root_source_file = b.path("zig_backend/build_reading_list.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    const reading_generator = b.addExecutable(.{
+        .name = "reading-list-maker",
+        .root_module = reading_module,
+    });
+    const reading_run = b.addRunArtifact(reading_generator);
+    const reading_step = b.step("reading-list", "compile reading list with pandoc");
+    reading_step.dependOn(&reading_run.step);
+
+    const pages_step = b.step("pages", "compile generated pages");
+    pages_step.dependOn(&blog_run.step);
+    pages_step.dependOn(&reading_run.step);
+
     const main_tests = b.addTest(.{ .root_module = module });
     const blog_tests = b.addTest(.{ .root_module = blog_module });
     const serve_tests = b.addTest(.{

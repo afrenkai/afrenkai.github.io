@@ -31,8 +31,8 @@ jobs:
         with:
           version: 0.16.0
 
-      - name: Build blogs
-        run: ./build.sh blogs
+      - name: Build generated pages
+        run: ./build.sh pages
 
       - name: Disable Jekyll processing
         run: touch .nojekyll

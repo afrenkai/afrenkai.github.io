@@ -1,0 +1,3 @@
+algorithm,gram_gemms,symmetric_square_gemms,rectangular_gemms,total_gemms,flops_per_matrix,teraflops_per_matrix,standard_to_algorithm_flop_ratio
+Standard Newton--Schulz,5,5,5,15,1460288880640,1.46028888064,1.0
+"Gram Newton--Schulz, reset [2]",2,14,2,18,790273982464,0.790273982464,1.8478260869565217
