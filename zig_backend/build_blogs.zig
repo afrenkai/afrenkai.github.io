@@ -163,12 +163,15 @@ const Generator = struct {
             arguments[argument_count] = metadata;
             argument_count += 1;
         }
-        const result = try std.process.run(self.allocator, self.io, .{
+        const result = std.process.run(self.allocator, self.io, .{
             .argv = arguments[0..argument_count],
             .cwd = .{ .dir = self.root },
             .stderr_limit = .limited(64 * 1024),
             .stdout_limit = .limited(64 * 1024),
-        });
+        }) catch |err| {
+            std.debug.print("error: could not start pandoc for {s}: {s}. Check PATH.\n", .{ slug, @errorName(err) });
+            return error.PandocFailed;
+        };
         switch (result.term) {
             .exited => |code| if (code != 0) {
                 std.debug.print("pandoc failed for {s} with exit code {d}:\n{s}\n", .{ slug, code, result.stderr });
@@ -201,7 +204,10 @@ pub fn main(init: std.process.Init) !void {
         .io = init.io,
         .root = Dir.cwd(),
     };
-    try generator.run();
+    generator.run() catch |err| switch (err) {
+        error.PandocFailed => std.process.exit(1),
+        else => return err,
+    };
 }
 
 fn writeFileAtomic(dir: Dir, io: Io, path: []const u8, data: []const u8) !void {
@@ -330,8 +336,9 @@ fn makeIndex(allocator: Allocator, posts: []const Post) ![]const u8 {
             "    <meta name=\"author\" content=\"Artem Frenk\">\n    <meta name=\"description\" content=\"Blog posts and notes by Artem Frenk.\">\n" ++
             "    <title>Blogs | Artem Frenk</title>\n    <link rel=\"stylesheet\" href=\"../assets/site.css\">\n" ++
             "  </head>\n  <body>\n    <div class=\"site-shell\">\n      <header class=\"masthead\">\n" ++
-            "        <nav class=\"site-nav\" aria-label=\"Primary navigation\">\n          <a href=\"/\">Home</a>\n" ++
-            "          <a href=\"/papers/\">Papers</a>\n          <a href=\"/blogs/\" aria-current=\"page\">Blogs and Notes</a>\n" ++
+            "        <nav class=\"site-nav\" aria-label=\"Primary navigation\">\n          <a href=\"../index.html\">Home</a>\n" ++
+            "          <a href=\"../papers/index.html\">Papers</a>\n          <a href=\"index.html\" aria-current=\"page\">Blogs and Notes</a>\n" ++
+            "          <a href=\"../reading-list/index.html\">Reading List</a>\n" ++
             "        </nav>\n      </header>\n\n      <main id=\"content\" class=\"page-grid page-grid-single\">\n        <article>\n" ++
             "          <p class=\"kicker\">Blogs</p>\n          <h1 class=\"page-title\">Blogs</h1>\n\n" ++
             "          <ul class=\"item-list\">\n",
@@ -346,7 +353,7 @@ fn makeIndex(allocator: Allocator, posts: []const Post) ![]const u8 {
         for (posts) |post| {
             try writer.writer.writeAll("            <li>\n              <h3><a href=\"");
             try writeHtmlEscaped(&writer.writer, post.slug);
-            try writer.writer.writeAll("/\">");
+            try writer.writer.writeAll("/index.html\">");
             try writeHtmlEscaped(&writer.writer, post.title);
             try writer.writer.writeAll("</a></h3>\n");
             if (post.date.len != 0) {
